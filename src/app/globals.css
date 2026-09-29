@@ -1,26 +1,305 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #0a0a0a;
+  --ink-2: #141210;
+  --gold: #c9a24b;
+  --gold-light: #e8c877;
+  --gold-deep: #9a7b2f;
+  --gold-gradient: linear-gradient(
+    135deg,
+    #9a7b2f,
+    #e8c877 45%,
+    #c9a24b 70%,
+    #f3dc9b
+  );
+  --cream: #f6f1e7;
+  --cream-2: #ede5d3;
+  --milk: #ffffff;
+  --silver: #c0c0c0;
+  --text-dark: #1b1712;
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+  --container: 1280px;
+  --section-y: 120px;
+  --section-y-mobile: 72px;
+  --pad-x: 64px;
+  --pad-x-mobile: 24px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-deep: var(--gold-deep);
+  --color-cream: var(--cream);
+  --color-cream-2: var(--cream-2);
+  --color-milk: var(--milk);
+  --color-silver: var(--silver);
+  --color-text-dark: var(--text-dark);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-dm-sans);
+  --radius-card: 24px;
+  --radius-frame: 32px;
+  --radius-pill: 999px;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (max-width: 1023px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --section-y: 72px;
+    --pad-x: 24px;
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ink);
+  color: var(--milk);
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body.has-custom-cursor,
+body.has-custom-cursor * {
+  cursor: none !important;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--gold) 40%, transparent);
+  color: var(--milk);
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  letter-spacing: -0.02em;
+}
+
+.container-site {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: var(--pad-x-mobile);
+}
+
+@media (min-width: 1024px) {
+  .container-site {
+    padding-inline: var(--pad-x);
+  }
+}
+
+.section-pad {
+  padding-block: var(--section-y-mobile);
+}
+
+@media (min-width: 1024px) {
+  .section-pad {
+    padding-block: var(--section-y);
+  }
+}
+
+.text-gold-gradient {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-hairline {
+  border: 1px solid color-mix(in srgb, var(--gold) 30%, transparent);
+}
+
+.film-grain {
+  position: relative;
+}
+
+.film-grain::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  z-index: 1;
+}
+
+.display-h1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 44px;
+  line-height: 1.05;
+  /* Fluid scale so the three hero lines stay intact on laptop widths */
+  font-size: clamp(2.5rem, 4.8vw, 5.25rem);
+}
+
+.display-h2 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.display-h3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+@media (min-width: 1024px) {
+  .display-h2 {
+    font-size: 64px;
+  }
+  .display-h3 {
+    font-size: 28px;
+  }
+}
+
+.outline-display {
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--gold) 55%, transparent);
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+.whatsapp-pulse::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  border: 2px solid #25d366;
+  animation: pulse-ring 4s var(--ease-out-expo) infinite;
+}
+
+@keyframes scroll-line {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+    opacity: 1;
+  }
+  60% {
+    transform: scaleY(1);
+    transform-origin: top;
+    opacity: 1;
+  }
+  61% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+    opacity: 0.4;
+  }
+}
+
+.scroll-indicator-line {
+  animation: scroll-line 2.2s var(--ease-out-expo) infinite;
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-slow {
+  animation: rotate-slow 28s linear infinite;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+.float-gentle {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.4s ease;
 }
